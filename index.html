@@ -25,8 +25,11 @@
           <circle cx="24" cy="24" r="20" fill="#6B21A8" fill-opacity="0.15"/>
           <circle cx="24" cy="24" r="14" stroke="#A78BFA" stroke-width="3"/>
           <path d="M12 24C12 18 16 14 24 14C32 14 36 18 36 24C36 30 32 34 24 34C16 34 12 30 12 24Z" stroke="#C026D3" stroke-width="3"/>
+          <path d="M18 18 Q24 14 30 18" stroke="#A78BFA" stroke-width="2" stroke-opacity="0.7"/>
+          <path d="M18 30 Q24 34 30 30" stroke="#A78BFA" stroke-width="2" stroke-opacity="0.7"/>
           <text x="24" y="29" text-anchor="middle" font-size="18" font-weight="bold" fill="#A78BFA">$</text>
           <path d="M32 14 L38 10 L38 18 Z" fill="#C026D3"/>
+          <path d="M35 12 L41 8" stroke="#A78BFA" stroke-width="2"/>
         </svg>
         <h1 class="text-3xl font-bold bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text text-transparent">CreatorDash</h1>
       </div>
@@ -65,7 +68,7 @@
         </div>
       </div>
 
-      <!-- Overview -->
+      <!-- OVERVIEW -->
       <div id="overview" class="section active p-8">
         <h3 id="welcome-text" class="text-xl font-medium mb-6"></h3>
         <div class="grid grid-cols-4 gap-6 mb-8">
@@ -77,7 +80,7 @@
         <div class="bg-zinc-900 rounded-3xl p-6"><h4 id="grafico-engagement-titulo" class="font-semibold mb-4"></h4><canvas id="engagementChart" height="110"></canvas></div>
       </div>
 
-      <!-- Ingresos -->
+      <!-- INGRESOS -->
       <div id="ingresos" class="section p-8">
         <h3 id="title-ingresos" class="text-2xl font-semibold mb-6"></h3>
         <div class="bg-zinc-900 rounded-3xl overflow-hidden">
@@ -87,7 +90,7 @@
         <button onclick="agregarIngreso()" class="mt-6 flex items-center gap-2 bg-zinc-800 hover:bg-zinc-700 px-6 py-3 rounded-2xl"><i class="fa-solid fa-plus"></i> Agregar ingreso</button>
       </div>
 
-      <!-- Brand Deals -->
+      <!-- BRAND DEALS -->
       <div id="deals" class="section p-8">
         <div class="flex justify-between items-center mb-6"><h3 id="title-deals" class="text-2xl font-semibold"></h3>
         <button onclick="conectarYoutube()" class="bg-gradient-to-r from-red-500 to-red-600 px-6 py-3 rounded-2xl font-semibold flex items-center gap-2"><i class="fa-brands fa-youtube"></i> <span id="btn-conectar-youtube"></span></button></div>
@@ -97,13 +100,13 @@
         </div>
       </div>
 
-      <!-- Calculadora -->
+      <!-- CALCULADORA -->
       <div id="calculadora" class="section p-8">
         <h3 id="title-calculadora" class="text-2xl font-semibold mb-6"></h3>
         <div class="bg-zinc-900 rounded-3xl p-12 text-center">
           <i class="fa-solid fa-calculator text-7xl text-violet-400 mb-8"></i>
           <p id="calculadora-texto" class="text-xl font-medium mb-8"></p>
-          <a href="https://creatordash.vercel.app" target="_blank" class="inline-flex items-center gap-3 bg-gradient-to-r from-violet-600 to-fuchsia-600 px-10 py-5 rounded-3xl text-xl font-semibold">Abrir Calculadora de Tarifas</a>
+          <a href="https://calculadora-creatorly-otsfgh2bu.vercel.app" target="_blank" class="inline-flex items-center gap-3 bg-gradient-to-r from-violet-600 to-fuchsia-600 px-10 py-5 rounded-3xl text-xl font-semibold">Abrir Calculadora de Tarifas</a>
         </div>
       </div>
 
@@ -117,7 +120,7 @@
         </div>
       </div>
 
-      <!-- Impuestos -->
+      <!-- IMPUESTOS -->
       <div id="impuestos" class="section p-8">
         <h3 id="title-impuestos" class="text-2xl font-semibold mb-6"></h3>
         <div class="bg-zinc-900 rounded-3xl p-8">
@@ -130,7 +133,7 @@
         </div>
       </div>
 
-      <!-- Estrategias -->
+      <!-- ESTRATEGIAS -->
       <div id="estrategias" class="section p-8">
         <h3 id="title-estrategias" class="text-3xl font-semibold mb-2"></h3>
         <p id="subtitle-estrategias" class="text-zinc-400 mb-8"></p>
@@ -141,7 +144,7 @@
         </div>
       </div>
 
-      <!-- Feedback -->
+      <!-- SUGERIR MEJORAS -->
       <div id="feedback" class="section p-8">
         <h3 id="title-feedback" class="text-3xl font-semibold mb-2"></h3>
         <p id="subtitle-feedback" class="text-zinc-400 mb-8"></p>
@@ -154,52 +157,180 @@
     </div>
   </div>
 
-  <!-- Modal Brand Deal -->
+  <!-- Modal -->
   <div id="newDealModal" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-50">
     <div class="bg-zinc-900 rounded-3xl p-8 w-full max-w-lg">
       <h3 id="modal-title" class="text-2xl font-semibold mb-6"></h3>
-      <div class="space-y-6">
-        <input id="modal-marca" type="text" class="w-full bg-zinc-800 border border-zinc-700 rounded-2xl px-5 py-4" placeholder="Nombre de la marca">
-        <select id="modal-plataforma" class="w-full bg-zinc-800 border border-zinc-700 rounded-2xl px-5 py-4"><option>Instagram</option><option>TikTok</option><option>YouTube</option></select>
-        <input id="modal-monto" type="number" class="w-full bg-zinc-800 border border-zinc-700 rounded-2xl px-5 py-4" placeholder="Monto en USD">
-        <button onclick="saveNewDeal()" id="modal-btn-guardar" class="w-full bg-gradient-to-r from-violet-600 to-fuchsia-600 py-4 rounded-2xl font-semibold"></button>
-        <button onclick="closeModal()" id="modal-btn-cancelar" class="w-full py-4 text-zinc-400"></button>
-      </div>
+      <input id="modal-marca" type="text" class="w-full bg-zinc-800 border border-zinc-700 rounded-2xl px-5 py-4 mb-4" placeholder="Nombre de la marca">
+      <select id="modal-plataforma" class="w-full bg-zinc-800 border border-zinc-700 rounded-2xl px-5 py-4 mb-4"><option>Instagram</option><option>TikTok</option><option>YouTube</option></select>
+      <input id="modal-monto" type="number" class="w-full bg-zinc-800 border border-zinc-700 rounded-2xl px-5 py-4 mb-6" placeholder="Monto en USD">
+      <button onclick="saveNewDeal()" id="modal-btn-guardar" class="w-full bg-gradient-to-r from-violet-600 to-fuchsia-600 py-4 rounded-2xl font-semibold mb-3"></button>
+      <button onclick="closeModal()" id="modal-btn-cancelar" class="w-full py-4 text-zinc-400"></button>
     </div>
   </div>
 
   <script>
-    let deals = JSON.parse(localStorage.getItem('deals')) || [];
-    let ingresos = JSON.parse(localStorage.getItem('ingresos')) || [];
+    let deals = JSON.parse(localStorage.getItem('deals')) || [{marca:"Nike Latam",plataforma:"YouTube",monto:3200,estado:"Pagado"},{marca:"Samsung Brasil",plataforma:"Instagram",monto:1850,estado:"Pendiente"}];
+    let ingresos = JSON.parse(localStorage.getItem('ingresos')) || [{fecha:"27/03",concepto:"Brand Deal Nike",monto:1200},{fecha:"25/03",concepto:"TikTok Live",monto:850}];
     let engagementChartInstance = null;
     let currentLang = 'es';
 
     const translations = {
-      es: { menuOverview:"Overview", menuIngresos:"Ingresos", menuDeals:"Brand Deals", menuCalculadora:"Calculadora de Tarifas", menuRoi:"ROI de Contenido", menuImpuestos:"Impuestos y Gastos", menuEstrategias:"Estrategias de Monetización", menuFeedback:"Sugerir Mejoras", btnNuevoDeal:"Nuevo Brand Deal", btnConectarYoutube:"Conectar YouTube" },
-      pt: { menuOverview:"Visão Geral", menuIngresos:"Receitas", menuDeals:"Brand Deals", menuCalculadora:"Calculadora de Tarifas", menuRoi:"ROI de Conteúdo", menuImpuestos:"Impostos e Despesas", menuEstrategias:"Estratégias de Monetização", menuFeedback:"Sugerir Melhorias", btnNuevoDeal:"Novo Brand Deal", btnConectarYoutube:"Conectar YouTube" }
+      es: {
+        menuOverview:"Overview", menuIngresos:"Ingresos", menuDeals:"Brand Deals", menuCalculadora:"Calculadora de Tarifas",
+        menuRoi:"ROI de Contenido", menuImpuestos:"Impuestos y Gastos", menuEstrategias:"Estrategias de Monetización",
+        menuFeedback:"Sugerir Mejoras", btnNuevoDeal:"Nuevo Brand Deal", btnConectarYoutube:"Conectar YouTube",
+        cardTiktokViews:"TikTok Promedio de Vistas", cardTiktokCompletion:"Tasa de Finalización",
+        cardYoutubeViews:"Vistas YouTube", cardEngagement:"Tasa de Engagement",
+        graficoEngagementTitulo:"Tendencia de Engagement", titleDeals:"Brand Deals",
+        titleIngresos:"Ingresos", titleCalculadora:"Calculadora de Tarifas",
+        titleRoi:"ROI de Contenido", titleImpuestos:"Impuestos y Gastos",
+        titleEstrategias:"Estrategias de Monetización 2025", subtitleEstrategias:"Ideas probadas para creadores de Latam y Brasil",
+        titleFeedback:"Sugerir Mejoras a CreatorDash", subtitleFeedback:"Tu opinión nos ayuda a mejorar",
+        modalTitle:"Nuevo Brand Deal", modalGuardar:"Guardar Deal", modalCancelar:"Cancelar",
+        calculadoraTexto:"La calculadora que usan miles de creadores"
+      },
+      pt: {
+        menuOverview:"Visão Geral", menuIngresos:"Receitas", menuDeals:"Brand Deals", menuCalculadora:"Calculadora de Tarifas",
+        menuRoi:"ROI de Conteúdo", menuImpuestos:"Impostos e Despesas", menuEstrategias:"Estratégias de Monetização",
+        menuFeedback:"Sugerir Melhorias", btnNuevoDeal:"Novo Brand Deal", btnConectarYoutube:"Conectar YouTube",
+        cardTiktokViews:"TikTok Média de Visualizações", cardTiktokCompletion:"Taxa de Conclusão",
+        cardYoutubeViews:"Visualizações YouTube", cardEngagement:"Taxa de Engajamento",
+        graficoEngagementTitulo:"Tendência de Engajamento", titleDeals:"Brand Deals",
+        titleIngresos:"Receitas", titleCalculadora:"Calculadora de Tarifas",
+        titleRoi:"ROI de Conteúdo", titleImpuestos:"Impostos e Despesas",
+        titleEstrategias:"Estratégias de Monetização 2025", subtitleEstrategias:"Ideias comprovadas para criadores da Latam e Brasil",
+        titleFeedback:"Sugerir Melhorias ao CreatorDash", subtitleFeedback:"Sua opinião nos ajuda a melhorar",
+        modalTitle:"Novo Brand Deal", modalGuardar:"Salvar Deal", modalCancelar:"Cancelar",
+        calculadoraTexto:"A calculadora que milhares de criadores usam"
+      }
     };
 
+    function renderDeals() {
+      const tbody = document.getElementById('body-deals');
+      tbody.innerHTML = '';
+      deals.forEach((deal,i) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td class="p-6">${deal.marca}</td><td class="p-6">${deal.plataforma}</td><td class="p-6 font-semibold">$${deal.monto}</td><td class="p-6"><span class="bg-emerald-500/20 text-emerald-400 px-3 py-1 rounded-full text-xs">${deal.estado}</span></td><td class="p-6"><button onclick="eliminarDeal(${i})" class="text-red-400"><i class="fa-solid fa-trash"></i></button></td>`;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function renderIngresos() {
+      const tbody = document.getElementById('body-ingresos');
+      tbody.innerHTML = '';
+      ingresos.forEach((ing,i) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td class="p-6">${ing.fecha}</td><td class="p-6">${ing.concepto}</td><td class="p-6 font-semibold">$${ing.monto}</td><td class="p-6"><button onclick="eliminarIngreso(${i})" class="text-red-400"><i class="fa-solid fa-trash"></i></button></td>`;
+        tbody.appendChild(tr);
+      });
+    }
+
     function showSection(section) {
+      if (engagementChartInstance) engagementChartInstance.destroy();
       document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
       document.getElementById(section).classList.add('active');
-      changeLanguage();
+      updateAllTexts();
+      if (section === 'overview') createEngagementChart();
+      if (section === 'ingresos') renderIngresos();
+      if (section === 'deals') renderDeals();
+    }
+
+    function updateAllTexts() {
+      const t = translations[currentLang];
+      document.getElementById('menu-overview').textContent = t.menuOverview;
+      document.getElementById('menu-ingresos').textContent = t.menuIngresos;
+      document.getElementById('menu-deals').textContent = t.menuDeals;
+      document.getElementById('menu-calculadora').textContent = t.menuCalculadora;
+      document.getElementById('menu-roi').textContent = t.menuRoi;
+      document.getElementById('menu-impuestos').textContent = t.menuImpuestos;
+      document.getElementById('menu-estrategias').textContent = t.menuEstrategias;
+      document.getElementById('menu-feedback').textContent = t.menuFeedback;
+      document.getElementById('btn-nuevo-deal').textContent = t.btnNuevoDeal;
+      document.getElementById('btn-conectar-youtube').textContent = t.btnConectarYoutube;
+      document.getElementById('welcome-text').textContent = currentLang === 'es' ? 'Bienvenido de nuevo, Sebastian' : 'Bem-vindo de volta, Sebastian';
+      document.getElementById('card-tiktok-views-label').textContent = t.cardTiktokViews;
+      document.getElementById('card-tiktok-completion-label').textContent = t.cardTiktokCompletion;
+      document.getElementById('card-youtube-views-label').textContent = t.cardYoutubeViews;
+      document.getElementById('card-engagement-label').textContent = t.cardEngagement;
+      document.getElementById('grafico-engagement-titulo').textContent = t.graficoEngagementTitulo;
+      document.getElementById('title-deals').textContent = t.titleDeals;
+      document.getElementById('title-ingresos').textContent = t.titleIngresos;
+      document.getElementById('title-calculadora').textContent = t.titleCalculadora;
+      document.getElementById('title-roi').textContent = t.titleRoi;
+      document.getElementById('title-impuestos').textContent = t.titleImpuestos;
+      document.getElementById('title-estrategias').textContent = t.titleEstrategias;
+      document.getElementById('subtitle-estrategias').textContent = t.subtitleEstrategias;
+      document.getElementById('title-feedback').textContent = t.titleFeedback;
+      document.getElementById('subtitle-feedback').textContent = t.subtitleFeedback;
+      document.getElementById('modal-title').textContent = t.modalTitle;
+      document.getElementById('modal-btn-guardar').textContent = t.modalGuardar;
+      document.getElementById('modal-btn-cancelar').textContent = t.modalCancelar;
+      document.getElementById('calculadora-texto').textContent = t.calculadoraTexto;
     }
 
     function changeLanguage() {
       currentLang = document.getElementById('language-select').value;
-      const t = translations[currentLang];
-      document.querySelectorAll('[id^="menu-"]').forEach(el => {
-        const key = el.id.replace('menu-', '');
-        if (t[`menu${key.charAt(0).toUpperCase() + key.slice(1)}`]) el.textContent = t[`menu${key.charAt(0).toUpperCase() + key.slice(1)}`];
+      updateAllTexts();
+    }
+
+    function createEngagementChart() {
+      engagementChartInstance = new Chart(document.getElementById('engagementChart'), {
+        type: 'line',
+        data: { labels: ['Sem 1','Sem 2','Sem 3','Sem 4'], datasets: [{ label: 'Engagement', data: [3.2,4.1,4.5,5.2], borderColor: '#ff0050', tension: 0.3 }] },
+        options: { plugins: { legend: { display: false } }, scales: { y: { grid: { color: '#27272a' } } } }
       });
     }
 
-    function openNewDealModal() { document.getElementById('newDealModal').classList.remove('hidden'); document.getElementById('newDealModal').classList.add('flex'); }
-    function closeModal() { document.getElementById('newDealModal').classList.add('hidden'); document.getElementById('newDealModal').classList.remove('flex'); }
-    function saveNewDeal() { closeModal(); }
-    function enviarFeedback() { alert('✅ Sugerencia enviada. ¡Gracias!'); }
+    function openNewDealModal() {
+      document.getElementById('newDealModal').classList.remove('hidden');
+      document.getElementById('newDealModal').classList.add('flex');
+    }
+    function closeModal() {
+      document.getElementById('newDealModal').classList.add('hidden');
+      document.getElementById('newDealModal').classList.remove('flex');
+    }
+    function saveNewDeal() {
+      const marca = document.getElementById('modal-marca').value || 'Nueva Marca';
+      const plataforma = document.getElementById('modal-plataforma').value;
+      const monto = parseFloat(document.getElementById('modal-monto').value) || 1000;
+      deals.push({marca, plataforma, monto, estado: 'Pendiente'});
+      localStorage.setItem('deals', JSON.stringify(deals));
+      closeModal();
+      renderDeals();
+      showSection('deals');
+    }
+    function eliminarDeal(i) { deals.splice(i,1); localStorage.setItem('deals', JSON.stringify(deals)); renderDeals(); }
+
+    function agregarIngreso() {
+      const fecha = prompt("Fecha (dd/mm):") || "28/03";
+      const concepto = prompt("Concepto:") || "Nuevo ingreso";
+      const monto = parseFloat(prompt("Monto USD:")) || 500;
+      ingresos.unshift({fecha, concepto, monto});
+      localStorage.setItem('ingresos', JSON.stringify(ingresos));
+      renderIngresos();
+    }
+    function eliminarIngreso(i) { ingresos.splice(i,1); localStorage.setItem('ingresos', JSON.stringify(ingresos)); renderIngresos(); }
+
+    function enviarFeedback() {
+      alert(currentLang === 'es' ? '✅ Sugerencia enviada. ¡Gracias!' : '✅ Sugestão enviada. Obrigado!');
+      document.getElementById('feedback-text').value = '';
+    }
+
+    function exportToPDF() {
+      const element = document.querySelector('.section.active');
+      html2pdf().set({margin:15, filename:`CreatorDash_${currentLang}.pdf`, html2canvas:{scale:2}}).from(element).save();
+    }
+
+    function conectarYoutube() {
+      const btn = event.currentTarget;
+      btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> Conectando...`;
+      setTimeout(() => { renderDeals(); btn.innerHTML = `<i class="fa-brands fa-youtube"></i> Conectado ✓`; }, 1200);
+    }
 
     window.onload = () => {
+      renderDeals();
+      renderIngresos();
       showSection('overview');
     };
   </script>
