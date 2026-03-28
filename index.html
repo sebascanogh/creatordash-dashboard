@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CreatorDash</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <style>
+    body { font-family: 'Inter', system_ui, sans-serif; }
+    .nav-item { transition: all 0.2s; }
+    .nav-item.active { background-color: #27272a; color: white; }
+    .section { display: none; }
+    .section.active { display: block; }
+  </style>
+</head>
+<body class="bg-zinc-950 text-zinc-100 min-h-screen">
+  <div class="flex h-screen overflow-hidden">
+    <!-- Sidebar -->
+    <div class="w-72 bg-zinc-900 border-r border-zinc-800 flex flex-col">
+      <div class="p-6 border-b border-zinc-800 flex items-center gap-3">
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="24" cy="24" r="20" fill="#6B21A8" fill-opacity="0.15"/>
+          <circle cx="24" cy="24" r="14" stroke="#A78BFA" stroke-width="3"/>
+          <path d="M12 24C12 18 16 14 24 14C32 14 36 18 36 24C36 30 32 34 24 34C16 34 12 30 12 24Z" stroke="#C026D3" stroke-width="3"/>
+          <text x="24" y="29" text-anchor="middle" font-size="18" font-weight="bold" fill="#A78BFA">$</text>
+          <path d="M32 14 L38 10 L38 18 Z" fill="#C026D3"/>
+        </svg>
+        <h1 class="text-3xl font-bold bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text text-transparent">CreatorDash</h1>
+      </div>
+
+      <nav class="flex-1 p-4 space-y-1">
+        <a onclick="showSection('overview')" class="nav-item active flex items-center gap-3 px-4 py-3 rounded-2xl cursor-pointer"><i class="fa-solid fa-house w-5"></i> <span id="menu-overview"></span></a>
+        <a onclick="showSection('ingresos')" class="nav-item flex items-center gap-3 px-4 py-3 rounded-2xl cursor-pointer hover:bg-zinc-800"><i class="fa-solid fa-dollar-sign w-5"></i> <span id="menu-ingresos"></span></a>
+        <a onclick="showSection('deals')" class="nav-item flex items-center gap-3 px-4 py-3 rounded-2xl cursor-pointer hover:bg-zinc-800"><i class="fa-solid fa-handshake w-5"></i> <span id="menu-deals"></span></a>
+        <a onclick="showSection('calculadora')" class="nav-item flex items-center gap-3 px-4 py-3 rounded-2xl cursor-pointer hover:bg-zinc-800"><i class="fa-solid fa-calculator w-5"></i> <span id="menu-calculadora"></span></a>
+        <a onclick="showSection('roi')" class="nav-item flex items-center gap-3 px-4 py-3 rounded-2xl cursor-pointer hover:bg-zinc-800"><i class="fa-solid fa-chart-line w-5"></i> <span id="menu-roi"></span></a>
+        <a onclick="showSection('impuestos')" class="nav-item flex items-center gap-3 px-4 py-3 rounded-2xl cursor-pointer hover:bg-zinc-800"><i class="fa-solid fa-receipt w-5"></i> <span id="menu-impuestos"></span></a>
+        <a onclick="showSection('estrategias')" class="nav-item flex items-center gap-3 px-4 py-3 rounded-2xl cursor-pointer hover:bg-zinc-800"><i class="fa-solid fa-lightbulb w-5"></i> <span id="menu-estrategias"></span></a>
+        <a onclick="showSection('feedback')" class="nav-item flex items-center gap-3 px-4 py-3 rounded-2xl cursor-pointer hover:bg-zinc-800"><i class="fa-solid fa-comment-dots w-5"></i> <span id="menu-feedback"></span></a>
+      </nav>
+
+      <div class="p-4 border-t border-zinc-800">
+        <button onclick="openNewDealModal()" class="w-full bg-gradient-to-r from-violet-600 to-fuchsia-600 py-4 rounded-2xl font-semibold flex items-center justify-center gap-2">
+          <i class="fa-solid fa-plus"></i> <span id="btn-nuevo-deal"></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="flex-1 overflow-auto">
+      <div class="border-b border-zinc-800 bg-zinc-900 px-8 py-5 flex justify-between items-center">
+        <h2 id="page-title" class="text-2xl font-semibold"></h2>
+        <div class="flex items-center gap-4">
+          <select id="language-select" onchange="changeLanguage()" class="bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-2 text-sm">
+            <option value="es">Español</option>
+            <option value="pt">Português</option>
+          </select>
+          <button onclick="exportToPDF()" class="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-500 px-5 py-2 rounded-2xl text-sm font-medium">
+            <i class="fa-solid fa-file-pdf"></i> Exportar PDF
+          </button>
+          <div class="w-9 h-9 bg-violet-600 rounded-2xl flex items-center justify-center font-semibold">S</div>
+        </div>
+      </div>
+
+      <!-- Overview -->
+      <div id="overview" class="section active p-8">
+        <h3 id="welcome-text" class="text-xl font-medium mb-6"></h3>
+        <div class="grid grid-cols-4 gap-6 mb-8">
+          <div class="bg-zinc-900 rounded-3xl p-6"><p id="card-tiktok-views-label" class="text-zinc-400 text-sm"></p><p id="tiktok-views" class="text-4xl font-bold mt-2">2.4M</p></div>
+          <div class="bg-zinc-900 rounded-3xl p-6"><p id="card-tiktok-completion-label" class="text-zinc-400 text-sm"></p><p id="tiktok-completion" class="text-4xl font-bold mt-2">68%</p></div>
+          <div class="bg-zinc-900 rounded-3xl p-6"><p id="card-youtube-views-label" class="text-zinc-400 text-sm"></p><p id="youtube-views" class="text-4xl font-bold mt-2">1.8M</p></div>
+          <div class="bg-zinc-900 rounded-3xl p-6"><p id="card-engagement-label" class="text-zinc-400 text-sm"></p><p id="engagement-rate" class="text-4xl font-bold mt-2">4.8%</p></div>
+        </div>
+        <div class="bg-zinc-900 rounded-3xl p-6"><h4 id="grafico-engagement-titulo" class="font-semibold mb-4"></h4><canvas id="engagementChart" height="110"></canvas></div>
+      </div>
+
+      <!-- Ingresos -->
+      <div id="ingresos" class="section p-8">
+        <h3 id="title-ingresos" class="text-2xl font-semibold mb-6"></h3>
+        <div class="bg-zinc-900 rounded-3xl overflow-hidden">
+          <table class="w-full"><thead class="bg-zinc-800"><tr><th class="text-left p-6">Fecha</th><th class="text-left p-6">Concepto</th><th class="text-left p-6">Monto (USD)</th><th class="w-12"></th></tr></thead>
+          <tbody id="body-ingresos" class="divide-y divide-zinc-800"></tbody></table>
+        </div>
+        <button onclick="agregarIngreso()" class="mt-6 flex items-center gap-2 bg-zinc-800 hover:bg-zinc-700 px-6 py-3 rounded-2xl"><i class="fa-solid fa-plus"></i> Agregar ingreso</button>
+      </div>
+
+      <!-- Brand Deals -->
+      <div id="deals" class="section p-8">
+        <div class="flex justify-between items-center mb-6"><h3 id="title-deals" class="text-2xl font-semibold"></h3>
+        <button onclick="conectarYoutube()" class="bg-gradient-to-r from-red-500 to-red-600 px-6 py-3 rounded-2xl font-semibold flex items-center gap-2"><i class="fa-brands fa-youtube"></i> <span id="btn-conectar-youtube"></span></button></div>
+        <div class="bg-zinc-900 rounded-3xl overflow-hidden">
+          <table class="w-full" id="tabla-deals"><thead class="bg-zinc-800"><tr><th class="text-left p-6" id="th-marca"></th><th class="text-left p-6" id="th-plataforma"></th><th class="text-left p-6" id="th-monto"></th><th class="text-left p-6" id="th-estado"></th><th class="w-12"></th></tr></thead>
+          <tbody class="divide-y divide-zinc-800" id="body-deals"></tbody></table>
+        </div>
+      </div>
+
+      <!-- Calculadora -->
+      <div id="calculadora" class="section p-8">
+        <h3 id="title-calculadora" class="text-2xl font-semibold mb-6"></h3>
+        <div class="bg-zinc-900 rounded-3xl p-12 text-center">
+          <i class="fa-solid fa-calculator text-7xl text-violet-400 mb-8"></i>
+          <p id="calculadora-texto" class="text-xl font-medium mb-8"></p>
+          <a href="https://creatordash.vercel.app" target="_blank" class="inline-flex items-center gap-3 bg-gradient-to-r from-violet-600 to-fuchsia-600 px-10 py-5 rounded-3xl text-xl font-semibold">Abrir Calculadora de Tarifas</a>
+        </div>
+      </div>
+
+      <!-- ROI -->
+      <div id="roi" class="section p-8">
+        <h3 id="title-roi" class="text-2xl font-semibold mb-6"></h3>
+        <div class="grid grid-cols-3 gap-6">
+          <div class="bg-zinc-900 rounded-3xl p-6 text-center"><p class="text-emerald-400 text-sm">ROI Promedio</p><p class="text-5xl font-bold mt-2">4.8x</p></div>
+          <div class="bg-zinc-900 rounded-3xl p-6 text-center"><p class="text-violet-400 text-sm">Mejor Plataforma</p><p class="text-5xl font-bold mt-2">TikTok</p></div>
+          <div class="bg-zinc-900 rounded-3xl p-6 text-center"><p class="text-amber-400 text-sm">Mejor Formato</p><p class="text-5xl font-bold mt-2">Reels</p></div>
+        </div>
+      </div>
+
+      <!-- Impuestos -->
+      <div id="impuestos" class="section p-8">
+        <h3 id="title-impuestos" class="text-2xl font-semibold mb-6"></h3>
+        <div class="bg-zinc-900 rounded-3xl p-8">
+          <div class="flex justify-between"><span>Ingresos brutos</span><span class="font-semibold">$2,847</span></div>
+          <div class="mt-8 space-y-4">
+            <div class="flex justify-between"><span>Impuestos estimados</span><span>$427</span></div>
+            <div class="flex justify-between"><span>Gastos deducibles</span><span class="text-emerald-400">-$210</span></div>
+            <div class="border-t pt-4 flex justify-between font-bold"><span>Neto a pagar</span><span>$217</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Estrategias -->
+      <div id="estrategias" class="section p-8">
+        <h3 id="title-estrategias" class="text-3xl font-semibold mb-2"></h3>
+        <p id="subtitle-estrategias" class="text-zinc-400 mb-8"></p>
+        <div class="grid grid-cols-3 gap-6">
+          <div class="bg-zinc-900 rounded-3xl p-6"><div class="text-4xl mb-4">📱</div><h4 class="font-semibold">Live Commerce en TikTok</h4><p class="text-zinc-400 text-sm mt-2">Ejemplo: R$52.000 en 3 horas</p></div>
+          <div class="bg-zinc-900 rounded-3xl p-6"><div class="text-4xl mb-4">🤖</div><h4 class="font-semibold">IA para contenido viral</h4><p class="text-zinc-400 text-sm mt-2">Crea 10x más rápido</p></div>
+          <div class="bg-zinc-900 rounded-3xl p-6"><div class="text-4xl mb-4">💰</div><h4 class="font-semibold">Brand Deals automáticos</h4><p class="text-zinc-400 text-sm mt-2">De visitas a pagos</p></div>
+        </div>
+      </div>
+
+      <!-- Feedback -->
+      <div id="feedback" class="section p-8">
+        <h3 id="title-feedback" class="text-3xl font-semibold mb-2"></h3>
+        <p id="subtitle-feedback" class="text-zinc-400 mb-8"></p>
+        <div class="bg-zinc-900 rounded-3xl p-8">
+          <select id="feedback-categoria" class="w-full bg-zinc-800 border border-zinc-700 rounded-2xl px-5 py-4 mb-4"><option>💡 Idea / Mejora</option><option>🐞 Reportar error</option><option>🚀 Nueva funcionalidad</option></select>
+          <textarea id="feedback-text" rows="5" class="w-full bg-zinc-800 border border-zinc-700 rounded-2xl p-5" placeholder="Cuéntanos qué mejorar..."></textarea>
+          <button onclick="enviarFeedback()" class="mt-6 w-full bg-gradient-to-r from-violet-600 to-fuchsia-600 py-4 rounded-2xl font-semibold">Enviar sugerencia</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Brand Deal -->
+  <div id="newDealModal" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-50">
+    <div class="bg-zinc-900 rounded-3xl p-8 w-full max-w-lg">
+      <h3 id="modal-title" class="text-2xl font-semibold mb-6"></h3>
+      <div class="space-y-6">
+        <input id="modal-marca" type="text" class="w-full bg-zinc-800 border border-zinc-700 rounded-2xl px-5 py-4" placeholder="Nombre de la marca">
+        <select id="modal-plataforma" class="w-full bg-zinc-800 border border-zinc-700 rounded-2xl px-5 py-4"><option>Instagram</option><option>TikTok</option><option>YouTube</option></select>
+        <input id="modal-monto" type="number" class="w-full bg-zinc-800 border border-zinc-700 rounded-2xl px-5 py-4" placeholder="Monto en USD">
+        <button onclick="saveNewDeal()" id="modal-btn-guardar" class="w-full bg-gradient-to-r from-violet-600 to-fuchsia-600 py-4 rounded-2xl font-semibold"></button>
+        <button onclick="closeModal()" id="modal-btn-cancelar" class="w-full py-4 text-zinc-400"></button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let deals = JSON.parse(localStorage.getItem('deals')) || [];
+    let ingresos = JSON.parse(localStorage.getItem('ingresos')) || [];
+    let engagementChartInstance = null;
+    let currentLang = 'es';
+
+    const translations = {
+      es: { menuOverview:"Overview", menuIngresos:"Ingresos", menuDeals:"Brand Deals", menuCalculadora:"Calculadora de Tarifas", menuRoi:"ROI de Contenido", menuImpuestos:"Impuestos y Gastos", menuEstrategias:"Estrategias de Monetización", menuFeedback:"Sugerir Mejoras", btnNuevoDeal:"Nuevo Brand Deal", btnConectarYoutube:"Conectar YouTube" },
+      pt: { menuOverview:"Visão Geral", menuIngresos:"Receitas", menuDeals:"Brand Deals", menuCalculadora:"Calculadora de Tarifas", menuRoi:"ROI de Conteúdo", menuImpuestos:"Impostos e Despesas", menuEstrategias:"Estratégias de Monetização", menuFeedback:"Sugerir Melhorias", btnNuevoDeal:"Novo Brand Deal", btnConectarYoutube:"Conectar YouTube" }
+    };
+
+    function showSection(section) {
+      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+      document.getElementById(section).classList.add('active');
+      changeLanguage();
+    }
+
+    function changeLanguage() {
+      currentLang = document.getElementById('language-select').value;
+      const t = translations[currentLang];
+      document.querySelectorAll('[id^="menu-"]').forEach(el => {
+        const key = el.id.replace('menu-', '');
+        if (t[`menu${key.charAt(0).toUpperCase() + key.slice(1)}`]) el.textContent = t[`menu${key.charAt(0).toUpperCase() + key.slice(1)}`];
+      });
+    }
+
+    function openNewDealModal() { document.getElementById('newDealModal').classList.remove('hidden'); document.getElementById('newDealModal').classList.add('flex'); }
+    function closeModal() { document.getElementById('newDealModal').classList.add('hidden'); document.getElementById('newDealModal').classList.remove('flex'); }
+    function saveNewDeal() { closeModal(); }
+    function enviarFeedback() { alert('✅ Sugerencia enviada. ¡Gracias!'); }
+
+    window.onload = () => {
+      showSection('overview');
+    };
+  </script>
+</body>
+</html>
